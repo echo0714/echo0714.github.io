@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+  
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="author" content="Dong Yuanxin">
+  
+  
+  <title>极限学习机原理 | quzongshun</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Hexo, Theme-AD">
+  
+
+  
+  <meta name="description" content="董沅鑫的小站">
+
+  
+
+  <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":null,"appkey":null,"comment":false,"count":false},
+    welcome: {"enable":true,"interval":30},
+    start_time: "2019-03-16",
+    passwords: ["efe07af7441da2b69c4a41e42e73be4db47f66010a56900788a458354a7373ec", ],
+    is_post: true,
+    lock: false,
+    author: "Dong Yuanxin",
+    share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  <script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+  
+</head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">quzongshun</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 人生有诗意，永远是少年</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首页</a>
+      
+        <a href="/archives/" target="_self">归档</a>
+      
+        <a href="/tags/" target="_self">标签</a>
+      
+        <a href="/categories/" target="_self">分类</a>
+      
+        <a href="/friends/" target="_self">友链</a>
+      
+        <a href="/about/" target="_self">关于</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/echo0714/" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>导航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首页
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            标签
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分类
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/friends/" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            关于
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-03-19
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    极限学习机原理
+  </h1>
+  
+  <article class="passage-article">
+    <h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>极限学习机(ELM: Extreme Learning Machine)是一种全新的前馈神经网络(SLFN: Single hidden Layers Feedforward Neural Network)训练框架。传统前馈神经网络一般采用基于梯度下降的学习算法，存在训练速度慢、易陷入局部极小值、 学习率的选择敏感等缺点。ELM学习算法随机选取输入层与隐含层的连接权值及隐含层神经元的偏置，在训练过程中无需调整，仅需要优化隐含层神经元的个数。相比于传统前馈神经网络算法，ELM在学习速度快前提下，还具有良好的泛化性能。</p>
+<h2 id="二、基本概念"><a href="#二、基本概念" class="headerlink" title="二、基本概念"></a>二、基本概念</h2><p>对于$N$个任意不同的训练样本 ，其中$(x_i,y_i)$为输入向量， 为相对应的输出向量。具有$L$个隐层神经元和$M$个输出神经元单隐层前馈神经网络，采用激活函数 在数学上建模为：<br>$$ \sum_{i=1}^{L}\beta_ig(\omega_i\cdot x_i+b_i)=o_j, j=1,…,N $$<br>其中：$\omega_i=[\omega_{i1},\omega_{i2},…,\omega_{in}] $表示连接输入层神经元和第$i$个隐层神经元的输入权值，$b_i$表示第$i$个隐层神经元的偏置，其中$\omega_i\cdot x_j$是$\omega_i$和$x_j$的内积，$\beta=[\beta_1,\beta_2,…,\beta_n]^T$表示输出层和隐层之间的输出权值，$T=[t_1,t_2,…,t_n]^T$表示训练样本的期望输出矩阵。<br>具有$L$个隐层神经元和$M$个输出神经元单隐层前馈神经网络，采用激活函数$g(x)$，可以以零误差逼近$N$个输入样本，即$\sum_{j=1}^L \parallel o_j-t_j\parallel$，存在$\beta_i$，$\omega_i$和$b_i$使得：$$\sum_{i=1}^L \beta_ig(\omega_i\cdot x_i+b_i)=t_j, j=1,…,N $$<br>上述$N$个方程可以合并为$H\beta=T$,其中：$$H=[h(x_1)^T,…,h(x_N)^T]^n$$ </p>
+<p>$$<br>=\left\lbrack<br> \begin{matrix}<br> (\omega_1\cdot x_1+b_1) &amp; \cdots &amp; g(\omega_L\cdot x_1+b_L) \<br> \vdots &amp; \cdots &amp; \vdots \<br> (\omega_1\cdot x_N+b_1) &amp; \cdots &amp; g(\omega_L\cdot x_N+b_L)<br> \end{matrix}<br> \right\rbrack_{N\times L}<br>$$</p>
+<p>$$<br>\beta=<br>\left[<br>\begin{matrix}<br>\beta_1^T\<br>\vdots\<br>\beta_L^T<br>\end{matrix}<br>\right]_{L\times M，}<br>$$</p>
+<p>$$<br>T=<br>\left[<br>\begin{matrix}<br>T_1^T\<br>\vdots\<br>T_L^T<br>\end{matrix}<br>\right]_{N\times M}<br>$$</p>
+<p>在ELM中$H$被称为随机特征映射矩阵。</p>
+<h2 id="三、解-beta"><a href="#三、解-beta" class="headerlink" title="三、解 $\beta$"></a>三、解 $\beta$</h2><p>原作者文章中对比了两种解输出层和隐藏层之间权值矩阵的方法：</p>
+<p>###1.传统梯度下降法方法<br>传统上，针对训练SLFNs，希望找到具体的$\hat{\beta_i}$，$\hat{\omega_i}$和$\hat{b_i}$使得：</p>
+<p>$$<br>||H(\hat{\omega_1},\hat{\omega_2},…,\hat{\omega_L},\hat{b_1},\hat{b_2},…,\hat{b_L})\hat{\beta}-T=\min_{\omega_i,b_i,\beta}||H(\omega_1,\omega_2,…,\omega_L,b_1,b_2,…,b_L)\beta-T)<br>$$</p>
+<p>可以等同于最小化代价函数：</p>
+<p>$$<br>E=\sum_{j=1}^N \lbrack\sum_{i=1}^L \beta_ig(\omega_i\cdot x_i+b_i)-t_i]^2<br>$$</p>
+<p>当$H$未知的时候，求解$||H\beta=T||$的最小值采用梯度下降算法。在梯度下降算法的最小化过程中，输入权重$\omega_i$，输出权重$\beta_i$和偏置$b_i$通过迭代的方式调整：</p>
+<p>$$<br>W_k=W_{k-1}-\eta \frac{\partial E(W)}{\partial W}<br>$$</p>
+<p>其中的$\eta$是学习率。反向传播算法是一种流行的前馈神经网络算法，它的主要特点是通过从输入到输出反向迭代，有效计算梯度。但是BP算法中存在几点问题：</p>
+<p>####a.$\eta$的取值问题：<br>学习率太小，学习算法收敛速度太慢；学习率太大时，算法不稳定；</p>
+<p>####b.易陷入局部最小值：<br>当代价函数为非凸函数（事实上多层神经网络恰恰不是凸函数），学习率取值太小，则算法容易陷入局部最小；</p>
+<p>####c.BP算法可能导致神经网络训练过度，在代价函数最小化过程中需要合适的停止方法；</p>
+<p>####d.训练时间：基于梯度下降的学习算法中大多都非常耗时。</p>
+<p>###2.最小二乘法（最小平方法，least-squares）<br>基于梯度下降的传统前馈神经网络函数逼近理论需要调整输入权重$\omega$和隐藏层偏差$b$，而事实上，如果只有激活函数是无限可微的，则可以随机分配输入权重和隐藏层偏差。输入权重$\omega_i$和隐藏层偏差$b_i$实际上不需要被调整，隐藏层输出矩阵$H$可以保持不变。在学习开始时将随机值分配给这些参数，并保持$H$不变 。训练SLFN等同于找到线性系统$H\beta=T$的最小二乘解$\hat{\beta}$：</p>
+<p>$$<br>||H(\omega_1,\omega_2,…,\omega_L,b_1,b_2,…,b_L)\hat{\beta}-T=\min_{\omega_i,b_i,\beta}||H(\omega_1,\omega_2,…,\omega_L,b_1,b_2,…,b_L)\beta-T)<br>$$</p>
+<p>当隐层神经元个数与样本个数相同时（即$L=N$）, 矩阵$H$可逆，方程$H\beta=T$有唯一解。<br>然而，在大多数情况下，隐藏节点的数量远小于不同训练样本的数量$L\ll N$,矩阵$H$是非方形矩阵，不能采用一般的矩阵求逆矩阵方法计算$\hat{\beta}$。<br>根据定理，线性系统的最小范数最小二乘解是：</p>
+<p>$$<br>\hat{\beta}=H^\dag T<br>$$</p>
+<p>其中$H^\dag$是$H$的MP广义逆矩阵。由附录定理，我们可以得到上式的性质：</p>
+<p>####a.最小训练误差（Minimum training error）<br>特解$\hat{\beta}=H^\dag T$是广义线性系统$H\beta=T$的最小二乘解，几乎所有的学习算法都希望训练误差达最小的，由于局部最小或无限的训练迭代等原因，大多数学习算法难以实现。</p>
+<p>####b.权重值最小（Smallest norm of weights）<br>特解是所有最小二乘法解中的最小值:</p>
+<p>$$<br>||\hat{\beta}||=||H^\dag T||\le||\beta||,<br>$$</p>
+<p>$$<br>\forall\beta\in{\beta:||H=\beta T||\le||Hz-t||,\forall z\in R^{L\times N}}<br>$$</p>
+<p>正如Bartlett [1]指出，对于具有较小权重的前馈网络，除了训练样本的最小方差，参数的个数与网络的泛化能力无关，即权重越小，网络的泛化能力越好。</p>
+<p>####c.  的最小二乘解是唯一的。</p>
+<p>##四、算法实现<br>给定训练样本$\aleph={(x_i,t_i)|x_i\in R^n,t_i\in R^m,i=1,2,…,N}$，激活函数$g(x)$，隐层神经元个数$L$：</p>
+<p>#####Step1:随机设置输入权重$\omega_i$和偏置$b_i, i=1,…,N$,</p>
+<p>#####Step2: 计算随机特征映射矩阵$H$（隐层输出矩阵），</p>
+<p>#####Step3:计算输出权重$\beta$，$\hat{\beta}=H^\dag T$，其中$T=[t_1,…,t_N]^T$ .</p>
+<p>###1.Moore-Penrose逆（MP逆）<br>定义：设$A\in C^{m\times n}$，若存在$B\in C^{M\times n}$满足下列Penrose方程:<br>$(1)\ ABA=A$<br>$(2)\ BAB=B$<br>$(3)\ (AB)^H=AB$<br>$(4)\ (BA)^H=BA$<br>则称$B$是$A$的一个Moore-Penrose广义逆，记为$A^\dag$。</p>
+<p>###2.线性系统的最小范数二乘解<br>定义： 对于广义线性系统$Ax=y$，若$\hat{x}$满足：</p>
+<p>$$<br>||A\hat{x}=y||=\min_x ||Ax=y||<br>$$</p>
+<p>其中$||\cdot||$表示欧几里得范数，也称欧氏距离，则称$\hat{x}$是$Ax=y$的一个最小二乘解。<br>定义：对于广义线性系统$Ax=y$，若存在$x_0\in R^n$，满足：<br>$$<br>||x_0||\le||x||,<br>$$</p>
+<p>$$<br>\forall x\in {x:||Ax-y||\le||Az-y||,\forall z\in R^n}<br>$$</p>
+<p>则称$x_0$是$Ax=y$的一个最小范数最小二乘解。</p>
+<p>##参考文献<br>[1] G.-B. Huang, Q.-Y. Zhu, and C.-K. Siew .Extreme learning machine: Theory and applications. Neurocomputing ,2006 ,70:489–501.<br>[2]P.-L.Bartlett .The sample complexity of pattern classification with neural networks: the size of the weights is more important than the size of the network .IEEE Transactios on Information Theory,1998,44(2):525-536.</p>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、概述"><span class="toc-text">一、概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、基本概念"><span class="toc-text">二、基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、解-beta"><span class="toc-text">三、解 $\beta$</span></a></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: 屈宗顺</div>
+      
+        <div>
+          原文链接: 
+          <a href target="_blank">http://yoursite.com/passages/2019-03-19-ELM/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+</div>
+
+    </main>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title">博客推荐</h5>
+        
+          <span class="site-footer-item">
+            <a href target="_self">none</a>
+          </span>
+        
+          <span class="site-footer-item">
+            <a href target="_self">none</a>
+          </span>
+        
+      </div>
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title">系列教程</h5>
+        
+          <span class="site-footer-item">
+            <a href target="_self">none</a>
+          </span>
+        
+      </div>
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title">其它</h5>
+        
+          <span class="site-footer-item">
+            <a href target="_self">none</a>
+          </span>
+        
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已稳定运行<span id="site-time"></span>
+    </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: quzongshun1996@163.com
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i> 
+      2019 <a href="https://github.com/dongyuanxin/theme-ad/" target="_blank">Theme-AD</a>.
+      Created by <a href="https://godbmw.com/" target="_blank">GodBMW</a>.
+      All rights reserved.
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="site-layer-reward" id="site-layer-reward" style="display: none;">
+        
+          <div>
+            <img src="/images/wechat.png" alt="WeChat">
+            
+              <p>WeChat</p>
+            
+          </div>
+        
+          <div>
+            <img src="/images/alipay.png" alt="AliPay">
+            
+              <p>AliPay</p>
+            
+          </div>
+        
+      </div>
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="javascript:void(0);" data-enable="false">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/passages/post-title/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    <a href="javascript:void(0);" id="site-reward">
+      <i class="fa fa-thumbs-up"></i>
+    </a>
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+    <a id="share-btn-weibo" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-weibo"></i>
+    </a>
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+
+
+
+
+
+    
+  </body>
+</html>
