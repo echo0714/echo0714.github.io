@@ -177,9 +177,9 @@
     <h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>极限学习机(ELM: Extreme Learning Machine)是一种全新的前馈神经网络(SLFN: Single hidden Layers Feedforward Neural Network)训练框架。传统前馈神经网络一般采用基于梯度下降的学习算法，存在训练速度慢、易陷入局部极小值、 学习率的选择敏感等缺点。ELM学习算法随机选取输入层与隐含层的连接权值及隐含层神经元的偏置，在训练过程中无需调整，仅需要优化隐含层神经元的个数。相比于传统前馈神经网络算法，ELM在学习速度快前提下，还具有良好的泛化性能。</p>
 <h2 id="二、基本概念"><a href="#二、基本概念" class="headerlink" title="二、基本概念"></a>二、基本概念</h2><p>对于$N$个任意不同的训练样本 ，其中$(x_i,y_i)$为输入向量， 为相对应的输出向量。具有$L$个隐层神经元和$M$个输出神经元单隐层前馈神经网络，采用激活函数 在数学上建模为：<br>$$ \sum_{i=1}^{L}\beta_ig(\omega_i\cdot x_i+b_i)=o_j, j=1,…,N $$<br>其中：$\omega_i=[\omega_{i1},\omega_{i2},…,\omega_{in}] $表示连接输入层神经元和第$i$个隐层神经元的输入权值，$b_i$表示第$i$个隐层神经元的偏置，其中$\omega_i\cdot x_j$是$\omega_i$和$x_j$的内积，$\beta=[\beta_1,\beta_2,…,\beta_n]^T$表示输出层和隐层之间的输出权值，$T=[t_1,t_2,…,t_n]^T$表示训练样本的期望输出矩阵。<br>具有$L$个隐层神经元和$M$个输出神经元单隐层前馈神经网络，采用激活函数$g(x)$，可以以零误差逼近$N$个输入样本，即$\sum_{j=1}^L \parallel o_j-t_j\parallel$，存在$\beta_i$，$\omega_i$和$b_i$使得：$$\sum_{i=1}^L \beta_ig(\omega_i\cdot x_i+b_i)=t_j, j=1,…,N $$<br>上述$N$个方程可以合并为$H\beta=T$,其中：$$H=[h(x_1)^T,…,h(x_N)^T]^n$$ </p>
 <p>$$<br>=\left\lbrack<br> \begin{matrix}<br> (\omega_1\cdot x_1+b_1) &amp; \cdots &amp; g(\omega_L\cdot x_1+b_L) \<br> \vdots &amp; \cdots &amp; \vdots \<br> (\omega_1\cdot x_N+b_1) &amp; \cdots &amp; g(\omega_L\cdot x_N+b_L)<br> \end{matrix}<br> \right\rbrack_{N\times L}<br>$$</p>
-<p>$$<br>\beta=<br>\left[<br>\begin{matrix}<br>\beta_1^T\<br>\vdots\<br>\beta_L^T<br>\end{matrix}<br>\right]_{L\times M，}<br>$$</p>
-<p>$$<br>T=<br>\left[<br>\begin{matrix}<br>T_1^T\<br>\vdots\<br>T_L^T<br>\end{matrix}<br>\right]_{N\times M}<br>$$</p>
-<p>在ELM中$H$被称为随机特征映射矩阵。</p>
+<p>$$<br>\beta=<br>\left[<br>\begin{matrix}<br>\beta_1^T \<br>\vdots \<br>\beta_L^T<br>\end{matrix}<br>\right]_{L\times M，}<br>$$</p>
+<p>$$<br>T=<br>\left[<br>\begin{matrix}<br>T_1^T \<br>\vdots \<br>T_L^T<br>\end{matrix}<br>\right]_{N\times M}<br>$$</p>
+<p>在$ELM$中$H$被称为随机特征映射矩阵。</p>
 <h2 id="三、解-beta"><a href="#三、解-beta" class="headerlink" title="三、解 $\beta$"></a>三、解 $\beta$</h2><p>原作者文章中对比了两种解输出层和隐藏层之间权值矩阵的方法：</p>
 <h3 id="1-传统梯度下降法方法"><a href="#1-传统梯度下降法方法" class="headerlink" title="1.传统梯度下降法方法"></a>1.传统梯度下降法方法</h3><p>传统上，针对训练SLFNs，希望找到具体的$\hat{\beta_i}$，$\hat{\omega_i}$和$\hat{b_i}$使得：</p>
 <p>$$<br>||H(\hat{\omega_1},\hat{\omega_2},…,\hat{\omega_L},\hat{b_1},\hat{b_2},…,\hat{b_L})\hat{\beta}-T=\min_{\omega_i,b_i,\beta}||H(\omega_1,\omega_2,…,\omega_L,b_1,b_2,…,b_L)\beta-T)<br>$$</p>
